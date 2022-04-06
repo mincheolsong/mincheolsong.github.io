@@ -11,7 +11,7 @@
             📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
       </li>
       <li>
-        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++ -->
         <span class="nav__sub-title">WebHacking</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
@@ -23,25 +23,11 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "STL" %}
-                        <li><a href="/categories/stl" class="">C++ STL & 표준 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
         <span class="nav__sub-title">Coding Test</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Algorithm" %}
                         <li><a href="/categories/algorithm" class="">알고리즘 구현 (with C++) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "Programmers" %}
-                        <li><a href="/categories/programmers" class="">프로그래머스 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

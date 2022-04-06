@@ -1,7 +1,7 @@
 ---
 title: "web hacking"
 layout: archive
-permalink: categories/webhacking
+permalink: /categories/webhacking
 author_profile: true
 sidebar_main: true
 ---
