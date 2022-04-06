@@ -1,11 +1,7 @@
 ---
+layout : single
 title:  "WebHacking 1"
-excerpt: ""
-
-categories:
-  - webhacking
-
-date: 2022-04-06
+categories: webhacking
 ---
 
 웹해킹
