@@ -24,7 +24,7 @@ categories: webhacking
 
 ### HTTP
 >웹을 구현하기 위한 네트워크 프로토콜    
-**응답코드**      
+**응답코드** 
 1XX : 정보전달      
 2XX : 성공      
 3XX : 리다이렉션      
@@ -50,24 +50,24 @@ categories: webhacking
 > 대표적인 http프록시 프로그램
 
 * target menu
-![Alt text](../img/target_menu.png)
+![Alt text](/img/target_menu.png)
 
     접속한 host들과 url을 tree형태로 보여준다.    **선명하게 표시**된 localhost는 우리가 직접 방문한것을 나타낸다.     
     그 외에 *흐리게 표시*된 부분은 burp suit가 http메시지를 분석해서 안에 포함된 링크들을 자동으로 보여주는 것이다.       
 
 * Proxy->HTTP history
-![Alt text](../img/proxy_httphistory.png)
+![Alt text](/img/proxy_httphistory.png)
 
     우리가 이전에 접속했던 localhost와 url들을 표시한다.
     선택을 하면 아래쪽에 요청과 응답 http가 자세히 표시된다. 가장 중요한 부분이 **Cookie**부분이다.
 
 * Intruder
-![Alt text](../img/intruder.png)  
+![Alt text](/img/intruder.png)  
 
     요청 메시지의 일부분을 지정하여 여러개의 데이터를 반복해서 전송하는 기능이다.
 
 * Repeater
-![Alt text](../img/repeater.png)   
+![Alt text](/img/repeater.png)   
 
     Intruder와 비슷하지만 수동으로 테스트 할 때 더 유용한 기능이다.
     Proxy-HTTP history에서 테스트하고 싶은 요청을 마우스 오른쪽 클릭->Send to intruder선택하면 Repeater 탭에 등록된다. 
