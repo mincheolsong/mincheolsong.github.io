@@ -4,7 +4,6 @@ title:  "WebHacking 1"
 last_modified_at : 2022-04-07
 categories: webhacking
 ---
-# WebHacking 시작
 
 ## 준비 프로그램
 
@@ -21,11 +20,11 @@ categories: webhacking
 ### DVWA
 >웹해킹을 실습하고 그 대응방안을 학습할 수 있도록 만들어진 웹 어플리케이션
 
-## 주요 이론
+## 웹 아키텍쳐
 
 ### HTTP
 >웹을 구현하기 위한 네트워크 프로토콜    
-**응답코드**        
+**응답코드**
 >>1XX : 정보전달      
 2XX : 성공      
 3XX : 리다이렉션      
@@ -40,6 +39,8 @@ categories: webhacking
 
 ### XSS
 >SESSION ID를 빼내는 것을 주 목적으로 하는 공격기법
+
+## HTTP프록시와 버프스위트
 
 ### HTTP프록시
 >- HTTP요청과 응답을 가로챌 수 있다
