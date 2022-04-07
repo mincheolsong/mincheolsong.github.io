@@ -7,7 +7,7 @@ categories: webhacking
 
 ## 준비 프로그램
 
-### VirtualBox 
+### VirtualBox
 >가상화 프로그램으로 시스템의 일부자원을 사용하여 새로운 운영체제와 각종 프로그램을 설치 할 수 있다.     
 >이때, 원래 모체가 되는 시스템을 host 시스템이라고 하고 새로 운영체제를 설치한 환경을 guest환경이라고 한다.    guest환경을 사용하기 위해 virtualbox를 사용하는 것이다.
 
@@ -25,7 +25,7 @@ categories: webhacking
 ### HTTP
 >웹을 구현하기 위한 네트워크 프로토콜    
 **응답코드**
->>1XX : 정보전달      
+1XX : 정보전달      
 2XX : 성공      
 3XX : 리다이렉션      
 4XX : 클라이언트 쪽 에러      
@@ -40,7 +40,7 @@ categories: webhacking
 ### XSS
 >SESSION ID를 빼내는 것을 주 목적으로 하는 공격기법
 
-## HTTP프록시와 버프스위트
+## HTTP프록시와 Burp Suit
 
 ### HTTP프록시
 >- HTTP요청과 응답을 가로챌 수 있다
@@ -48,6 +48,19 @@ categories: webhacking
 
 ### Burp Suit
 > 대표적인 http프록시 프로그램
+
+* target menu
+<img src="../img/target_menu.png" /><br/>
+
+    접속한 host들과 url을 tree형태로 보여준다.    **선명하게 표시**된 localhost는 우리가 직접 방문한것을 나타낸다.     
+    그 외에 *흐리게 표시*된 부분은 burp suit가 http메시지를 분석해서 안에 포함된 링크들을 자동으로 보여주는 것이다.       
+
+* Proxy->HTTP history
+<img src="../img/proxy_httphistory.png" /><br/>
+
+    우리가 이전에 접속했던 localhost와 url들을 표시한다.
+    선택을 하면 아래쪽에 요청과 응답 http가 자세히 표시된다. 가장 중요한 부분이 **Cookie**부분이다.
+
 
 ### 브루트포스 공격
 >id와 pw가 일치할 때 까지 무한정 계속해서 반복입력 하는 것이다(무식하게)
