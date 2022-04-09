@@ -23,11 +23,11 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">Coding Test</span>
+        <span class="nav__sub-title">Java Script</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Algorithm" %}
-                        <li><a href="/categories/algorithm" class="">알고리즘 구현 (with C++) ({{category[1].size}})</a></li>
+                    {% if category[0] == "javascript" %}
+                        <li><a href="/categories/javascript" class="">js({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
