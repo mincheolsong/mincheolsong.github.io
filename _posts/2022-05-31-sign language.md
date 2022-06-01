@@ -38,7 +38,21 @@ knn은 최근접 이웃 알고리즘으로 *지도학습* 알고리즘 중 하�
     * k의 값을 1부터 증가시켜가며 각 점들에 대해 knn으로 분류해보고 오류 계산 
     * 가장 오류가 적은 k값을 선택
 
-### RNN
+### RNN  
+RNN은 *Sequence Data*에 적합한 알고리즘이다.
+<center><img src="/img/signlanguage/rnn_loop.png"></center>
+
+> Sequence Data
+- 우리는 하나의 단어만을 가지고 이해하지 않고, 이전 단어와 현재 단어를 조합해서 이해하는데 이것이 Sequence Data이다.
+- 기존의 NN/CNN은 이것을 하지 못한다.
+- x0의 결과가 h1에 영향을 미치고 x1의 결과가 h2에 영향을 미치고... 계속 이어지게 된다.
+
+
+
+
+
+
+ 
 
 
 
