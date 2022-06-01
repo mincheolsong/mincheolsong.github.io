@@ -12,6 +12,23 @@
       </li>
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++ -->
+        
+        <span class="nav__sub-title">Java Script</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "canvas" %}
+                        <li><a href="/categories/#canvas" class="">canvas({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">Project</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "signLanguage" %}
+                        <li><a href="/categories/#signlanguage" class="">signLanguage({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         <span class="nav__sub-title">Web Hacking</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
@@ -20,22 +37,6 @@
                 {% for category in site.categories %}
                     {% if category[0] == "webhacking" %}
                         <li><a href="/categories/#webhacking" class="">webhacking({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        <span class="nav__sub-title">Java Script</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "canvas" %}
-                        <li><a href="/categories/#javascript" class="">canvas({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        <span class="nav__sub-title">Project</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "project" %}
-                        <li><a href="/categories/#project" class="">project({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

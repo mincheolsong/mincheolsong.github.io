@@ -1,11 +1,11 @@
 ---
-title: "javascript"
+title: "canvas"
 layout: archive
-permalink: /categories/#javascript
+permalink: /categories/#canvas
 author_profile: true
 sidebar_main: true
 ---
 
 
-{% assign posts = site.categories.javascript %}
+{% assign posts = site.categories.canvas %}
 {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
