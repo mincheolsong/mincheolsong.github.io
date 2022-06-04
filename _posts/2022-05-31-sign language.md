@@ -1,7 +1,7 @@
 ---
 layout : single
 title:  "sign language"
-last_modified_at : 2022-06-01
+last_modified_at : 2022-06-04
 categories: signLanguage
 ---
 
@@ -39,13 +39,46 @@ knn은 최근접 이웃 알고리즘으로 *지도학습* 알고리즘 중 하�
     * 가장 오류가 적은 k값을 선택
 
 ### RNN  
-RNN은 *Sequence Data*에 적합한 알고리즘이다.
+RNN은 음성, 문자와 같이 순차적으로 진행하는 데이터 처리에 적합한 알고리즘 이다.
 <center><img src="/img/signlanguage/rnn_loop.png"></center>
+&nbsp;그림과 같이 hidden layer의 결과가 다시 hidden layer의 입력으로 들어가는 순환되는 구조를 가졌기 때문에 재귀 인공 신경망이라고 불린다.  
+&nbsp;hidden layer의 결과가 다시 hidden layer의 입력으로 들어가는 특성 때문에 RNN은 현재 들어오는 입력 데이터와 전 단계에서 나온 결과를 동시에 고려하게 됨으로써 기억 능력이 있다고 할 수 있게 되고, sequence 또는 시계열 데이터를 분석하는데 굉장이 효과적인 네트워크이다.
 
-> Sequence Data
-- 우리는 하나의 단어만을 가지고 이해하지 않고, 이전 단어와 현재 단어를 조합해서 이해하는데 이것이 Sequence Data이다.
-- 기존의 NN/CNN은 이것을 하지 못한다.
-- x0의 결과가 h1에 영향을 미치고 x1의 결과가 h2에 영향을 미치고... 계속 이어지게 된다.
+## 구현 과정   
+
+### 1. media pipe가 제공해 주는 손의 joint를 활용하여 벡터사이의 각도를 구한다.
+<center><img src="/img/signlanguage/joint.png"></center>
+
+1. 점과 점사이의 뺄셈 연산을 통해 0번에서 1번으로 가는 벡터, 1번에서 2번으로 가는 벡터 등등 많은 벡터를 만들어낸다.
+```python
+if result.multi_hand_landmarks:
+        for hand_landmarks in result.multi_hand_landmarks: # 여러개의 손을 인식 할 수 있으니까, for문 반복
+            joint = np.zeros((21,4)) # 손 관절 (joint) 넘파이 배열로 생성
+            for j, lm in enumerate(hand_landmarks.landmark): # media pipe의 landmark를 반복하며 joint에 대입
+                joint[j] = [lm.x,lm.y,lm.z,lm.visibility]
+
+            v1 = joint[[0,1,2,3,0,5,6,7,0, 9,10,11, 0,13,14,15, 0,17,18,19],:3] # 벡터를 구하기 위해 생성하는 v1,v2 (v2에서 v2을 빼면 v백터가 된다)
+            v2 = joint[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],:3]
+
+            v = v2-v1
+            v = v / np.linalg.norm(v,axis=1)[:,np.newaxis] # 정규화
+```
+2. 만들어진 벡터들 사이의 각도를 구한다  
+```python
+compareV1 = v[[0,1,2,4,5,6,8,9,10,12,13,14,16,17,18],:] #각 벡터의 각도를 비교하기 위해 생성하는 compare벡터
+compareV2 = v[[1,2,3,5,6,7,9,10,11,13,14,15,17,18,19],:]
+
+angle = np.arccos(np.einsum('nt,nt->n',compareV1,compareV2)) # compare벡터를 사용하여 각도를 구함
+angle = np.degrees(angle)
+```
+3. 구해진 각도를 KNN알고리즘으로 어떤 제스쳐를 뜻하는지 학습시킨다. 
+이때 구한 각도는 데이터셋을 활용하여 학습을 시키는데, 이 데이터셋은 직접 모을 수 있게 구현하였다.
+
+
+
+
+
+
 
 
 
