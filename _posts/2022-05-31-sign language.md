@@ -114,6 +114,86 @@ ret, results, neighbours, dist = knn.findNearest(data,3) #knn알고리즘 적용
 
 ### 2-2. 'done'동작을 취하면 입력한 초성으로 시작하는 단어목록을 출력하여 준다
 
+done동작을 설명하기 앞서 인식한 동작을 출력하여주는 코드를 먼저 설명해야 할 것 같다.  
+우선 동작마다 index번호를 매겨놓았다.
+<center>👇</center>
+```python
+gesture = {
+    0:'ㄱ',1:'ㄴ',2:'ㄷ',3:'ㄹ',4:'ㅁ',5:'ㅂ',6:'ㅅ',7:'ㅇ',
+    8:'ㅈ',9:'ㅊ',10:'ㅋ',11:'ㅌ',12:'ㅍ',13:'ㅎ', 25:'done',26:'spacing',27:'clear'
+}
+```
+
+
+<center>전체코드 구조👇</center>
+전체 코드는 무한반복문 `while True`에 싸여져 있다.
+```python
+
+while True:
+    (캠 연결 확인)
+
+    if result.multi_hand_landmarks:
+        for hand_landmarks in result.multi_hand_landmarks: # 여러개의 손을 인식 할 수 있으니까, for문 반복
+            (joint를 사용해서 각도 계산)
+            
+            (RNN적용 코드)
+
+            if keyboard.is_pressed('a'): # gesture를 학습하기 위한 조건문
+                ...
+                
+            ret, results, neighbours, dist = knn.findNearest(data,3) #knn알고리즘 적용
+
+            index = int(results[0][0]) #동자 구분을 위한 인덱싱
+            
+            if index in gesture.keys():
+                if index != prev_index: #정해진 시간동안 같은동작을 하면 입력으로 인식
+                    startTime = time.time()
+                    prev_index = index
+
+                else: 
+                    if time.time() - startTime > recognizeDelay:
+                        if index == 26:
+                            sentence += ' '
+                        elif index == 27:
+                            sentence = ''
+                        elif index == 25: # done동작(25) 하면 위에서 읽은 dic_file에서 sentence를 검색하고, 그 위치의 단어를 출력
+                            for i in range(0, dic_file.shape[0]):
+                                if (sentence == dic_file['초성'][i]):
+                                    selected_words.append(dic_file['단어'][i])
+                                    
+                            complete=1 #complete 를 표시하기 위해 1로 변경한다
+                            i=0
+                            word=''
+                        elif complete==0 and index!=27 and index!=26:
+                            sentence += gesture[index]
+                        startTime = time.time()
+
+                    if complete==0:
+                        word = gesture[index]
+                    draw.text((int(hand_landmarks.landmark[0].x*image.shape[1]),int(hand_landmarks.landmark[0].y*image.shape[0])), word, font=font, fill=(255,255,255))
+   
+    
+    draw.text((20,400),sentence,font=font,fill=(255,255,255))
+    
+    if complete==1:
+        print(sentence)
+        print(selected_words)
+        startActionTime = time.time()
+        complete = 2
+
+    if complete==2: # ★
+        if len(seq) < seq_length:
+            continue
+
+    (RNN학습 코드)
+
+    cv2.imshow('image', image)
+    cv2.waitKey(1)
+    if keyboard.is_pressed('b'):
+        break
+    
+```
+
 ## 한계
 양손을 사용하여 동적인 동작이 많은 수화를 학습시키는 것에 어려움을 느껴, 수화의 한 종류인 지화를 구현하였다. 그리고 지화를 통해 한정된 단어를 번역하는것에 그쳤다.
 
