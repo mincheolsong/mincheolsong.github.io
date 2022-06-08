@@ -96,7 +96,7 @@ angle = np.degrees(angle)
 <center>(수집한 데이터셋)</center>  
 
 
-### 2-1. 구해진 각도와 KNN 을 사용하여 <span style="background-color:#dcffe4">정적인</span> 손동작을 학습시킨다. 
+### 2-1. 구해진 각도와 <span style="background-color:#dcffe4">KNN</span> 을 사용하여 <span style="background-color:#dcffe4">정적인</span> 손동작을 학습시킨다. 
 
 ```python
 data = np.array([angle],dtype=np.float32)
@@ -105,7 +105,7 @@ ret, results, neighbours, dist = knn.findNearest(data,3) #knn알고리즘 적용
 ```
 <center>☝</center>  
 
-&nbsp; knn을 사용하여 학습시키는 코드이다.
+&nbsp; 구한 angle을 numpy 형태 데이터로 만들고, 그 데이터에 knn을 사용하여 학습시키는 코드이다.
 
 수행결과
 <img src="/img/signlanguage/result1.png">
@@ -114,9 +114,9 @@ ret, results, neighbours, dist = knn.findNearest(data,3) #knn알고리즘 적용
 
 ### 2-2. 'done'동작을 취하면 입력한 초성으로 시작하는 단어목록을 출력하여 준다
 
-done동작을 설명하기 앞서 인식한 동작을 출력하여주는 코드를 먼저 설명해야 할 것 같다.  
-우선 동작마다 index번호를 매겨놓았다.
+<center>동작마다 index번호를 매겨놓았다.</center>
 <center>👇</center>
+
 ```python
 gesture = {
     0:'ㄱ',1:'ㄴ',2:'ㄷ',3:'ㄹ',4:'ㅁ',5:'ㅂ',6:'ㅅ',7:'ㅇ',
@@ -124,53 +124,27 @@ gesture = {
 }
 ```
 
-
-<center>전체코드 구조👇</center>
-전체 코드는 무한반복문 `while True`에 싸여져 있다.
 ```python
+complete = 0 # 글씨 입력을 완료 했는지 확인하는 변수(done 동작을 하면 1로 바꿈)
+                                    .
+                                    .
+                                    .
 
-while True:
-    (캠 연결 확인)
-
-    if result.multi_hand_landmarks:
-        for hand_landmarks in result.multi_hand_landmarks: # 여러개의 손을 인식 할 수 있으니까, for문 반복
-            (joint를 사용해서 각도 계산)
-            
-            (RNN적용 코드)
-
-            if keyboard.is_pressed('a'): # gesture를 학습하기 위한 조건문
-                ...
+    if index == 25: # done동작(25위에서 읽은 dic_file에서 sentce검색하고, 그 위치의 단어를 출력
+        for i in range(0, dic_file.[0]):
+            if (sentence == dic['초성'][i]):
+                selected_words.append(dic_file['단어'][i])
                 
-            ret, results, neighbours, dist = knn.findNearest(data,3) #knn알고리즘 적용
+        complete=1 #complete 를 위해 1로 변경한다
+        i=0
+        word=''
+    elif complete==0 and index!=27index!=26:
+        sentence += gesture[index]
+    startTime = time.time()
 
-            index = int(results[0][0]) #동자 구분을 위한 인덱싱
-            
-            if index in gesture.keys():
-                if index != prev_index: #정해진 시간동안 같은동작을 하면 입력으로 인식
-                    startTime = time.time()
-                    prev_index = index
-
-                else: 
-                    if time.time() - startTime > recognizeDelay:
-                        if index == 26:
-                            sentence += ' '
-                        elif index == 27:
-                            sentence = ''
-                        elif index == 25: # done동작(25) 하면 위에서 읽은 dic_file에서 sentence를 검색하고, 그 위치의 단어를 출력
-                            for i in range(0, dic_file.shape[0]):
-                                if (sentence == dic_file['초성'][i]):
-                                    selected_words.append(dic_file['단어'][i])
-                                    
-                            complete=1 #complete 를 표시하기 위해 1로 변경한다
-                            i=0
-                            word=''
-                        elif complete==0 and index!=27 and index!=26:
-                            sentence += gesture[index]
-                        startTime = time.time()
-
-                    if complete==0:
-                        word = gesture[index]
-                    draw.text((int(hand_landmarks.landmark[0].x*image.shape[1]),int(hand_landmarks.landmark[0].y*image.shape[0])), word, font=font, fill=(255,255,255))
+    if complete==0:
+        word = gesture[index]
+    draw.text((int(hand_landmarks.landmar   x*image.shape[1]),int(hand_landm   landmark[0].y*image.shape[0])), word,  font=font, fill=(255,255,255))
    
     
     draw.text((20,400),sentence,font=font,fill=(255,255,255))
@@ -178,21 +152,43 @@ while True:
     if complete==1:
         print(sentence)
         print(selected_words)
-        startActionTime = time.time()
-        complete = 2
-
-    if complete==2: # ★
-        if len(seq) < seq_length:
-            continue
-
-    (RNN학습 코드)
-
-    cv2.imshow('image', image)
-    cv2.waitKey(1)
-    if keyboard.is_pressed('b'):
-        break
     
+                                    .
+                                    .
+                                    .
 ```
+25번 동작, 즉 done을 하면 dic에서 입력한 초성을 검색하고, `selected_words`에 `append`한다.   
+그 다음 일종의 `flag변수`역할을 하는 complete를 1로 변경시킨다.  
+*(이렇게 하는 이유는 done동작을 했을 경우 분기점을 만들어 다른 조건문이 실행되도록 하기 위함이다.)*
+
+### 3.<span style="background-color:#dcffe4">RNN</span>의 LSTM을 사용하여 <span style="background-color:#dcffe4">동적인</span> 손동작(next, prev)을 학습
+
+#### 3-1.window를 생성
+
+RNN의 LSTM을 사용하여 동적인 동작을 학습시키는 과정도 벡터사이의 각도를 이용한다. 하지만 **window**라는 것을 만들어야 하는데 이것은 LSTM의 기본 개념인 `최근 ~개의 데이터를 가지고 다음 데이터를 예측하기` 위해서이다.
+```python
+seq_length = 30
+```
+seq_length=30, 즉 window 사이즈를 30으로 설정하였다.  
+*(최근 30개의 데이터를 보고 다음 데이터를 예측하는 것이다)*
+
+<center><img src="/img/signlanguage/create_window.png"></center>
+<center><p style="font-size:11px">사진출처 : 빵형의 개발도상국 유튜브</p></center>
+위 그림에서 보는것 처럼 빨간색 window를 만들고 그 다음 한칸씩 내려가서 노란색 window를 만들고, 그 다음 초록색 window를 만든다.
+
+#### 3-2.dataSet파일 생성
+
+```python
+    full_seq_data = []
+    for seq in range(len(data) - seq_length):
+        full_seq_data.append(data[seq:seq + seq_length])
+    
+    full_seq_data = np.array(full_seq_data)
+    np.save(os.path.join('dataset', f'seq_{action}_{created_time}'), full_seq_data)
+```
+그 다음 for문을 돌면서 full_seq_data라는 리스트에 30개의 한 스텝씩 넘어가면서 데이터를 저장해준다.
+
+
 
 ## 한계
 양손을 사용하여 동적인 동작이 많은 수화를 학습시키는 것에 어려움을 느껴, 수화의 한 종류인 지화를 구현하였다. 그리고 지화를 통해 한정된 단어를 번역하는것에 그쳤다.
