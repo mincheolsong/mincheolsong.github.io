@@ -170,13 +170,13 @@ RNN의 LSTM을 사용하여 동적인 동작을 학습시키는 과정도 벡터
 seq_length = 30
 ```
 seq_length=30, 즉 window 사이즈를 30으로 설정하였다.  
-*(최근 30개의 데이터를 보고 다음 데이터를 예측하는 것이다)*
+*(최근 30개의 데이터를 보고 다음 데이터를 예측하게 된다)*
 
 <center><img src="/img/signlanguage/create_window.png"></center>
 <center><p style="font-size:11px">사진출처 : 빵형의 개발도상국 유튜브</p></center>
-위 그림에서 보는것 처럼 빨간색 window를 만들고 그 다음 한칸씩 내려가서 노란색 window를 만들고, 그 다음 초록색 window를 만든다.
+위 그림에서 보는것 처럼 빨간색 window를 만들고 그 다음 한칸씩 내려가면서 window를 계속 만든다.  
+(노란색 window를 만들고, 초록색 window ...)
 
-#### 3-2.dataSet파일 생성
 
 ```python
     full_seq_data = []
@@ -186,9 +186,14 @@ seq_length=30, 즉 window 사이즈를 30으로 설정하였다.
     full_seq_data = np.array(full_seq_data)
     np.save(os.path.join('dataset', f'seq_{action}_{created_time}'), full_seq_data)
 ```
-그 다음 for문을 돌면서 full_seq_data라는 리스트에 30개의 한 스텝씩 넘어가면서 데이터를 저장해준다.
+그 다음 for문을 돌면서 full_seq_data라는 리스트에 30개의 한 스텝씩 넘어가면서 데이터를 저장하여 sequence dataSet파일을 만든다.
+
+#### 3-2.dataSet파일을 사용하여 train
 
 
+
+수행결과
+<img src="/img/signlanguage/motion.gif">
 
 ## 한계
 양손을 사용하여 동적인 동작이 많은 수화를 학습시키는 것에 어려움을 느껴, 수화의 한 종류인 지화를 구현하였다. 그리고 지화를 통해 한정된 단어를 번역하는것에 그쳤다.
