@@ -268,7 +268,8 @@ history = model.fit(
 최종적으로 학습을 시키는 과정이다.
 
 
-
+순서도
+<img src="/img/signlanguage/flowchart.png">
 
 수행결과
 <!-- <img src="/img/signlanguage/motion.gif"> -->
