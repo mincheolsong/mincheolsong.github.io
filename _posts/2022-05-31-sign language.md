@@ -190,10 +190,94 @@ seq_length=30, 즉 window 사이즈를 30으로 설정하였다.
 
 #### 3-2.dataSet파일을 사용하여 train
 
+```python
+actions = [
+    'prev',
+    'next',
+    'stop'
+]
+
+data = np.concatenate([
+    np.load('dataset/seq_prev_1653293844.npy'),
+    np.load('dataset/seq_next_1653293844.npy'),
+    np.load('dataset/seq_stop_1653293844.npy'),
+], axis=0)
+```
+액션을 3개로 정의해주고, 위에서 만든 dataSet을 전부 load 후 하나로 합쳐준다.
+
+```python
+x_data = data[:, :, :-1]
+labels = data[:, 0, -1]
+```
+라벨과 데이터를 분리하여 준다.
+
+그 다음 라벨을 Categorical data로 만들어 주기 위해 One-Hot Encoding을 해야 한다.
+> One-Hot Encoding이란 사람이 이해하는 데이터를 컴퓨터에게 주입시키기 위한 가장 기본적인 방법이라고 할 수 있다.   
+>데이터를 수 많은 0과 한 개의 1 값으로 구분한다.   예를들어 숫자 0부터 9까지 구분하려 한다면 `[1,0,0,0...0]` `[0,1,0,0...0]` `[0,0,1,0...0]` `...` `[0,0,0,0...1]` 이렇게 인코딩하는 것이다.
+
+```python
+from tensorflow.keras.utils import to_categorical
+
+y_data = to_categorical(labels, num_classes=len(actions))
+print(y_data.shape)
+```
+tensorflow keras의 to_categorical을 사용하여 One-Hot Encoding을 적용하였다.
+
+```python
+from sklearn.model_selection import train_test_split
+
+x_data = x_data.astype(np.float32)
+y_data = y_data.astype(np.float32)
+
+x_train, x_val, y_train, y_val = train_test_split(x_data, y_data, test_size=0.1, random_state=2021)
+```
+sklearn의 train_test_split을 사용해서 training set과 test set으로 나눠준다. training set은 90%, test set은 10% 로 나눠준다.
+
+>**training set(학습 데이터셋)** : 모델의 학습을 위해 사용되는 데이터이다.   
+>**test set(테스트 데이터셋)** : 생성된 모델의 예측성능을 평가하는데 사용된다.
+
+```python
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
+
+model = Sequential([
+    LSTM(64, activation='relu', input_shape=x_train.shape[1:3]),
+    Dense(32, activation='relu'),
+    Dense(len(actions), activation='softmax')
+])
+
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['acc'])
+model.summary()
+```
+모델을 정의하는 코드이다.  
+Sequential API를 사용하여 LSTM과 DENSE 두개를 연결하여 준다. LSTM의 노드 갯수는 64개 activation 은 relu를 사용, Dense의 노드 갯수는 32개 activation은 relu를 사용한다. 그리고 activation은 softmax를 사용한다.  
+loss는 categorical_crossentropy를 사용하여 3개의 동작 중 어떤것인가를 model한테 추론하게 한다.
+
+```python
+history = model.fit(
+    x_train,
+    y_train,
+    validation_data=(x_val, y_val),
+    epochs=200,
+    callbacks=[
+        ModelCheckpoint('models/model.h5', monitor='val_acc', verbose=1, save_best_only=True, mode='auto'),
+        ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=50, verbose=1, mode='auto')
+    ]
+)
+```
+최종적으로 학습을 시키는 과정이다.
+
+
 
 
 수행결과
-<img src="/img/signlanguage/motion.gif">
+<!-- <img src="/img/signlanguage/motion.gif"> -->
+
+
+## 참조
+유튜브 '빵형의 개발도상국'  
+👇  
+<a href="https://www.youtube.com/c/%EB%B9%B5%ED%98%95%EC%9D%98%EA%B0%9C%EB%B0%9C%EB%8F%84%EC%83%81%EA%B5%AD">빵형의 개발도상국</a>
 
 ## 한계
 양손을 사용하여 동적인 동작이 많은 수화를 학습시키는 것에 어려움을 느껴, 수화의 한 종류인 지화를 구현하였다. 그리고 지화를 통해 한정된 단어를 번역하는것에 그쳤다.
@@ -202,7 +286,7 @@ seq_length=30, 즉 window 사이즈를 30으로 설정하였다.
 모음의 지화를 추가하여, 자음과 모음을 조합할 수 있는 기능을 만들면 지금보다는 더 완성도 있는 프로그램이 될 것 같다.
 
 ## 느낀점
-파이썬이 서툴었고, 딥러닝도 처음이었다. 꽤 오랜기간 동안 구글 유튜브 등을 찾아보며 어떻게든 해내고자 하였다. 프로젝트를 진행하며 대략적인 딥러닝의 개념을 알 수 있었다. 완벽하진 않지만 요즘 핫한 딥러닝의 흉내(?)를 낼 수 있었다는 점과 결과물을 만들어 냈다는 점에 의의를 두고 싶다.   
+파이썬이 서툴었고, 딥러닝도 처음이었다. 꽤 오랜기간 동안 구글 유튜브 등을 찾아보며 어떻게든 해내고자 하였다. 프로젝트를 진행하며 대략적인 딥러닝의 개념을 알 수 있었다. 완벽하진 않지만 딥러닝을 사용해봤다는 점과 결과물을 만들어 냈다는 점에 의의를 두고 싶다.👏   
 
 ____
 
