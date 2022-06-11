@@ -272,7 +272,7 @@ history = model.fit(
 <img src="/img/signlanguage/flowchart.png">
 
 수행결과
-<!-- <img src="/img/signlanguage/motion.gif"> -->
+<img src="/img/signlanguage/motion.gif">
 
 
 ## 참조
