@@ -29,6 +29,17 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+        <span class="nav__sub-title">Algorithm</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "algorithm-concept" %}
+                        <li><a href="/categories/#algorithm-concept" class="">concept({{category[1].size}})</a></li>                
+                    {% endif %}
+                    {% if category[0] == "baekjoon" %}
+                        <li><a href="/categories/#baekjoon" class="">baekjoon({{category[1].size}})</a></li>                
+                    {% endif %}
+                {% endfor %}
+            </ul>
         <span class="nav__sub-title">Web Hacking</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
