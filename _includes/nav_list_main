@@ -35,8 +35,8 @@
                     {% if category[0] == "algorithm-concept" %}
                         <li><a href="/categories/#algorithm-concept" class="">concept({{category[1].size}})</a></li>                
                     {% endif %}
-                    {% if category[0] == "baekjoon" %}
-                        <li><a href="/categories/#baekjoon" class="">baekjoon({{category[1].size}})</a></li>                
+                    {% if category[0] == "boj" %}
+                        <li><a href="/categories/#boj" class="">boj({{category[1].size}})</a></li>                
                     {% endif %}
                 {% endfor %}
             </ul>
