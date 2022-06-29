@@ -3,6 +3,8 @@ layout : single
 title:  "sign language"
 last_modified_at : 2022-06-11
 categories: signLanguage
+toc: true
+toc_sticky: true
 ---
 
 ## 제작동기
