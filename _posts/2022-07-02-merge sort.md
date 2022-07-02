@@ -7,7 +7,7 @@ toc: true
 toc_sticky: true
 ---
 
-## 병합 정렬(Merge Sort)
+# 병합 정렬(Merge Sort)
 
 ## 정렬 순서
 1. 리스트의 길이가 1 이하이면 이미 정렬된 것으로 본다.  
