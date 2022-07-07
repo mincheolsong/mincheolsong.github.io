@@ -13,14 +13,17 @@
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++ -->
         
-        <span class="nav__sub-title">Language</span>
+        <span class="nav__sub-title">Language / Framework / Library</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "JS" %}
                         <li><a href="/categories/#js" class="">JavaScript({{category[1].size}})</a></li>
                     {% endif %}
                     {% if category[0] == "python" %}
-                    <li><a href="/categories/#python" class="">python({{category[1].size}})</a></li>                
+                    <li><a href="/categories/#python" class="">Python({{category[1].size}})</a></li>                
+                    {% endif %}
+                    {% if category[0] == "react" %}
+                    <li><a href="/categories/#react" class="">React({{category[1].size}})</a></li>                
                     {% endif %}
                 {% endfor %}
             </ul>
