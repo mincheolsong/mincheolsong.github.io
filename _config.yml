@@ -21,7 +21,7 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "MINCHEOL"
 description              : "나의 공부 기록"
-url                      : "https://mincheolsong.github.io"
+url                      : # "https://mincheolsong.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "mincheolsong/blog-comments"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
