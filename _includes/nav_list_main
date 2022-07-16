@@ -46,6 +46,17 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+        <span class="nav__sub-title">OS / Network</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "os" %}
+                        <li><a href="/categories/#os" class="">OS({{category[1].size}})</a></li>
+                    {% endif %}
+                    {% if category[0] == "network" %}
+                    <li><a href="/categories/#network" class="">Network({{category[1].size}})</a></li>                
+                    {% endif %}
+                {% endfor %}
+            </ul>
       </li>
   </ul>
 </nav>
