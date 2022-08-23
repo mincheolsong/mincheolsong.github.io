@@ -33,6 +33,9 @@
                     {% if category[0] == "signLanguage" %}
                         <li><a href="/categories/#signlanguage" class="">signLanguage({{category[1].size}})</a></li>
                     {% endif %}
+                    {% if category[0] == "mytone" %}
+                        <li><a href="/categories/#mytone" class="">mytone({{category[1].size}})</a></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         <span class="nav__sub-title">Algorithm</span>
