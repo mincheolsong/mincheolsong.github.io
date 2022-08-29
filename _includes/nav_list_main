@@ -13,7 +13,7 @@
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++ -->
         
-        <span class="nav__sub-title">Language / Framework / Library</span>
+        <span class="nav__sub-title">Lang / Frame / Lib</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "JS" %}
