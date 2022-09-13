@@ -25,6 +25,9 @@
                     {% if category[0] == "react" %}
                     <li><a href="/categories/#react" class="">React({{category[1].size}})</a></li>                
                     {% endif %}
+                    {% if category[0] == "spring" %}
+                    <li><a href="/categories/#spring" class="">Spring({{category[1].size}})</a></li>                
+                    {% endif %}
                 {% endfor %}
             </ul>
         <span class="nav__sub-title">Project</span>
