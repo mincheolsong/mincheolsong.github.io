@@ -47,12 +47,10 @@
                     {% if category[0] == "algorithm-concept" %}
                         <li><a href="/categories/#algorithm-concept" class="">concept({{category[1].size}})</a></li>                
                     {% endif %}
-                    {% if category[0] == "boj" %}
-                        <li><a href="/categories/#boj" class="">boj({{category[1].size}})</a></li>                
+                    {% if category[0] == "algorithm-problem" %}
+                        <li><a href="/categories/#algorithm-problem" class="">problem({{category[1].size}})</a></li>                
                     {% endif %}
-                    {% if category[0] == "swea" %}
-                        <li><a href="/categories/#swea" class="">swea({{category[1].size}})</a></li>                
-                    {% endif %}
+                    
                 {% endfor %}
             </ul>
         <span class="nav__sub-title">OS / Network</span>
